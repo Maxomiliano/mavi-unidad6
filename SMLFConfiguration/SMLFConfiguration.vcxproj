@@ -131,11 +131,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FastAndFurious.cpp" />
+    <ClCompile Include="Space.cpp" />
     <ClCompile Include="Unidad6.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FastAndFurious.h" />
     <ClInclude Include="SMLFConfiguration.h" />
+    <ClInclude Include="Space.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

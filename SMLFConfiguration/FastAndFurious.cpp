@@ -7,7 +7,7 @@ using namespace sf;
 
 FastAndFurious::FastAndFurious()
 {
-	RenderWindow window(VideoMode(800, 600), "Ejemplo de MRU");
+	RenderWindow window(VideoMode(800, 600), "Fast and Furious");
 	Vector2f position(0.0f, 300.0f);
 	Vector2f initialVelocity(1.0f, 0.0f);
 	Vector2f finalVelocity(100.0f, 0.0f);
