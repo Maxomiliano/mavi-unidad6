@@ -18,9 +18,15 @@
     <ClCompile Include="Unidad6.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="FastAndFurious.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SMLFConfiguration.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="FastAndFurious.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

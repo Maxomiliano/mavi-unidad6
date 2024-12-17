@@ -130,9 +130,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FastAndFurious.cpp" />
     <ClCompile Include="Unidad6.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FastAndFurious.h" />
     <ClInclude Include="SMLFConfiguration.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
