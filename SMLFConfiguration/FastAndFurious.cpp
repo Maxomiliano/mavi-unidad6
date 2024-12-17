@@ -9,11 +9,10 @@ FastAndFurious::FastAndFurious()
 {
 	RenderWindow window(VideoMode(800, 600), "Ejemplo de MRU");
 	Vector2f position(100.0f, 300.0f);
-	Vector2f initialVelocity(50.0f, 0.0f);
+	Vector2f initialVelocity(1.0f, 0.0f);
 	Vector2f finalVelocity(100.0f, 0.0f);
-	Vector2f velocityAccumulator(1.0f, 0.0f);
-	const float acceleration = 0.1f;
-	const float speed = 1.0f;
+	Vector2f velocityAccumulator(2.0f, 0.0f);
+	//const float acceleration = 0.1f;
 
 	while (window.isOpen())
 	{
@@ -25,10 +24,18 @@ FastAndFurious::FastAndFurious()
 			}
 
 		float deltaTime = 1.0f / 60.0f;
-		position.x += speed * deltaTime;
-		if (position.x > 600)
+		position.x += initialVelocity.x * deltaTime;
+		if (initialVelocity.x < finalVelocity.x)
 		{
-			position.x = 100.0f;
+			if (position.x > 600)
+			{
+				position.x = 100.0f;
+				initialVelocity.x += velocityAccumulator.x;
+			}
+		}
+		else
+		{
+			window.close();
 		}
 
 		window.clear();
