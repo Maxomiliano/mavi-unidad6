@@ -8,11 +8,10 @@ using namespace sf;
 FastAndFurious::FastAndFurious()
 {
 	RenderWindow window(VideoMode(800, 600), "Ejemplo de MRU");
-	Vector2f position(100.0f, 300.0f);
+	Vector2f position(0.0f, 300.0f);
 	Vector2f initialVelocity(1.0f, 0.0f);
 	Vector2f finalVelocity(100.0f, 0.0f);
 	Vector2f velocityAccumulator(2.0f, 0.0f);
-	//const float acceleration = 0.1f;
 
 	while (window.isOpen())
 	{
@@ -27,9 +26,9 @@ FastAndFurious::FastAndFurious()
 		position.x += initialVelocity.x * deltaTime;
 		if (initialVelocity.x < finalVelocity.x)
 		{
-			if (position.x > 600)
+			if (position.x > 800)
 			{
-				position.x = 100.0f;
+				position.x = 0.0f;
 				initialVelocity.x += velocityAccumulator.x;
 			}
 		}
