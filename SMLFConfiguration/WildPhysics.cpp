@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 
 using namespace sf;
 using namespace std;
@@ -49,6 +50,13 @@ void WildPhysics::ProcessEvents()
 
 void WildPhysics::Update()
 {
+	static float spawnTimer = 0.0f;
+	spawnTimer += deltaTime;
+	if (spawnTimer > 1.0f)
+	{
+		SpawnObstacles();
+		spawnTimer = 0.0f;
+	}
 	for (size_t i = 0; i < obstacles.size(); i++)
 	{
 		auto& obstacle = obstacles[i];
@@ -66,13 +74,15 @@ void WildPhysics::Update()
 			--i;
 		}
 	}
-
 }
 
 void WildPhysics::Render()
 {
 	window.clear();
-	//window.draw();
+	for (const auto& obstacle : obstacles)
+	{
+		window.draw(obstacle);
+	}
 	window.display();
 }
 

@@ -8,6 +8,7 @@ public:
 	void Render();
 	void ProcessEvents();
 	void SpawnObstacles();
+
 private:
 	int score = 0;
 	const float gravity = 0.98f;
