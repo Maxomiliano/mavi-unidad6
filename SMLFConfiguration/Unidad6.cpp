@@ -4,6 +4,7 @@
 #include "FastAndFurious.h"
 #include "Space.h"
 #include "Bounce.h"
+#include "WildPhysics.h"
 
 using namespace sf;
 
@@ -11,6 +12,7 @@ int main()
 {
 	//FastAndFurious faf;
 	//Space space;
-	Bounce bounce;
+	//Bounce bounce;
+	WildPhysics wp;
 	return 0;
 }

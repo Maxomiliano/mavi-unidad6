@@ -134,12 +134,14 @@
     <ClCompile Include="FastAndFurious.cpp" />
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="Unidad6.cpp" />
+    <ClCompile Include="WildPhysics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bounce.h" />
     <ClInclude Include="FastAndFurious.h" />
     <ClInclude Include="SMLFConfiguration.h" />
     <ClInclude Include="Space.h" />
+    <ClInclude Include="WildPhysics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
