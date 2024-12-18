@@ -3,12 +3,14 @@
 #include <iostream>
 #include "FastAndFurious.h"
 #include "Space.h"
+#include "Bounce.h"
 
 using namespace sf;
 
 int main()
 {
 	//FastAndFurious faf;
-	Space space;
+	//Space space;
+	Bounce bounce;
 	return 0;
 }
