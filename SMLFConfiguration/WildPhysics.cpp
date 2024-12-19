@@ -44,9 +44,16 @@ void WildPhysics::Update()
 {
 	if (isActive)
 	{
-		velocity += acceleration * deltaTime;
-		obstacle.move(velocity * deltaTime, 0.0f);
-		if (obstacle.getPosition().x > window.getSize().x)
+		//velocity += acceleration * deltaTime;
+		if(movingRight)
+		{
+			obstacle.move(velocity * deltaTime, 0.0f);
+		}
+		else
+		{
+			obstacle.move(-velocity * deltaTime, 0.0f);
+		}
+		if ((movingRight && obstacle.getPosition().x > window.getSize().x) || (!movingRight && obstacle.getPosition().x + obstacle.getRadius() * 2 < 0))
 		{
 			isActive = false;
 		}
@@ -71,9 +78,19 @@ void WildPhysics::SpawnObstacles()
 {
 	obstacle.setRadius(20.0f);
 	obstacle.setFillColor(Color::Green);
-	obstacle.setPosition(0.0f, static_cast<float>(rand() % window.getSize().y));
+	movingRight = rand() % 2 == 0;
 
-	//velocity = static_cast<float>(50 + rand() % 100);
+	if (movingRight) 
+	{
+		float yPos = static_cast<float>(rand() % (window.getSize().y - static_cast<int>(obstacle.getRadius() * 2)));
+		obstacle.setPosition(0.0f, yPos);
+	}
+	else
+	{
+		float yPos = static_cast<float>(rand() % (window.getSize().y - static_cast<int>(obstacle.getRadius() * 2)));
+		obstacle.setPosition(static_cast<float>(window.getSize().x - obstacle.getRadius() * 2), yPos);
+	}
+	velocity = static_cast<float>(10 + rand() % 20);
 	isActive = true;
 }
 

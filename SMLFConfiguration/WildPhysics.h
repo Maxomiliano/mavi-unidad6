@@ -22,11 +22,13 @@ private:
 	float velocity = 1.0f;
 	float deltaTime = 0.1f / 60.0f;
 	bool isActive;
+	bool movingRight;
 
 	//Font font;
 	//Text scoreText;
 	RenderWindow window;
 	Event evt;
 	CircleShape obstacle;	
+	Vector2f position;
 };
 
