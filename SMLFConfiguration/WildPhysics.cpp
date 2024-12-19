@@ -85,8 +85,8 @@ void WildPhysics::SpawnObstacles()
 		float yPos = static_cast<float>(rand() % (window.getSize().y - static_cast<int>(obstacle.getRadius() * 2)));
 		obstacle.setPosition(static_cast<float>(window.getSize().x - obstacle.getRadius() * 2), yPos);
 	}
-	//velocity = Vector2f(movingRight ? acceleration : -acceleration, 0.0f);
-	velocity.x = static_cast<float>(10 + rand() % 20);
+	float speed = static_cast<float>(10 + rand() % 20);
+	velocity = Vector2f(movingRight ? speed : -speed, 0.0f);
 	isActive = true;
 }
 
