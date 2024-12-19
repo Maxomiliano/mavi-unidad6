@@ -7,8 +7,8 @@ using namespace sf;
 using namespace std;
 
 WildPhysics::WildPhysics() : window(VideoMode(800, 600), "Wild"),
-velocity(0.0f),
-acceleration(0.1f),
+velocity(0.0f, 0.0f),
+//acceleration(1.0f),
 isActive(false)
 {
 	srand(time(NULL));
@@ -44,16 +44,11 @@ void WildPhysics::Update()
 {
 	if (isActive)
 	{
-		//velocity += acceleration * deltaTime;
-		if(movingRight)
-		{
-			obstacle.move(velocity * deltaTime, 0.0f);
-		}
-		else
-		{
-			obstacle.move(-velocity * deltaTime, 0.0f);
-		}
-		if ((movingRight && obstacle.getPosition().x > window.getSize().x) || (!movingRight && obstacle.getPosition().x + obstacle.getRadius() * 2 < 0))
+		//velocity.x += (movingRight ? acceleration : -acceleration) * deltaTime;
+		position = obstacle.getPosition();
+		position.x += velocity.x * deltaTime;
+		obstacle.setPosition(position);
+		if ((movingRight && position.x > window.getSize().x) || (!movingRight && position.x + obstacle.getRadius() * 2 < 0))
 		{
 			isActive = false;
 		}
@@ -90,7 +85,8 @@ void WildPhysics::SpawnObstacles()
 		float yPos = static_cast<float>(rand() % (window.getSize().y - static_cast<int>(obstacle.getRadius() * 2)));
 		obstacle.setPosition(static_cast<float>(window.getSize().x - obstacle.getRadius() * 2), yPos);
 	}
-	velocity = static_cast<float>(10 + rand() % 20);
+	//velocity = Vector2f(movingRight ? acceleration : -acceleration, 0.0f);
+	velocity.x = static_cast<float>(10 + rand() % 20);
 	isActive = true;
 }
 

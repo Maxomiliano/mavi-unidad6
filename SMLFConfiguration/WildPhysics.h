@@ -16,19 +16,19 @@ public:
 	void CheckCollisions(Vector2f mousePos);
 	
 private:
-	int score = 0;
-	const float gravity = 0.98f;
-	const float acceleration = 0.1f;
-	float velocity = 1.0f;
-	float deltaTime = 0.1f / 60.0f;
-	bool isActive;
-	bool movingRight;
-
-	//Font font;
-	//Text scoreText;
 	RenderWindow window;
 	Event evt;
+	//Font font;
+	//Text scoreText;
 	CircleShape obstacle;	
 	Vector2f position;
+	Vector2f velocity;
+
+	bool isActive;
+	bool movingRight;
+	int score = 0;
+	float deltaTime = 0.1f / 60.0f;
+	const float gravity = 0.98f;
+	//const float acceleration;
 };
 
