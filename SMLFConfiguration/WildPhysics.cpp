@@ -14,6 +14,15 @@ isVerticalObjectActive(false),
 isHorizontalObjectActive(false)
 {
 	srand(time(NULL));
+	if (!font.loadFromFile("AQCT.ttf"))
+	{
+		cout << "Error cargando la fuente" << endl;
+	}
+
+	scoreText.setFont(font);
+	scoreText.setCharacterSize(24);
+	scoreText.setFillColor(Color::Yellow);
+	scoreText.setPosition(10.0f, 10.0f);
 }
 
 void WildPhysics::Play()
@@ -81,6 +90,8 @@ void WildPhysics::Update()
 void WildPhysics::Render()
 {
 	window.clear();
+	scoreText.setString(to_string(score));
+	window.draw(scoreText);
 	if (isHorizontalObjectActive)
 	{
 		window.draw(horizontalObstacle);
@@ -95,7 +106,7 @@ void WildPhysics::Render()
 void WildPhysics::SpawnHorizontalObstacles()
 {
 	horizontalObstacle.setRadius(20.0f);
-	horizontalObstacle.setFillColor(Color::Green);
+	horizontalObstacle.setFillColor(Color::Magenta);
 	movingRight = rand() % 2 == 0;
 
 	if (movingRight) 
@@ -116,7 +127,7 @@ void WildPhysics::SpawnHorizontalObstacles()
 void WildPhysics::SpawnVerticalObstacles()
 {
 	verticalObstacle.setRadius(20.0f);
-	verticalObstacle.setFillColor(Color::Blue);
+	verticalObstacle.setFillColor(Color::Cyan);
 
 	float xPos = static_cast<float>(rand() % (window.getSize().x - static_cast<int>(verticalObstacle.getRadius() * 2)));
 	verticalObstacle.setPosition(xPos, 0.0f);
@@ -129,9 +140,11 @@ void WildPhysics::CheckCollisions(sf::Vector2f mousePos)
 	if (horizontalObstacle.getGlobalBounds().contains(mousePos))
 	{
 		isHorizontalObjectActive = false;
+		score++;
 	}
 	if (verticalObstacle.getGlobalBounds().contains(mousePos))
 	{
 		isVerticalObjectActive = false;
+		score++;
 	}
 }

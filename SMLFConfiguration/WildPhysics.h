@@ -19,8 +19,8 @@ public:
 private:
 	RenderWindow window;
 	Event evt;
-	//Font font;
-	//Text scoreText;
+	Font font;
+	Text scoreText;
 	CircleShape horizontalObstacle;	
 	CircleShape verticalObstacle;
 	Vector2f position;
