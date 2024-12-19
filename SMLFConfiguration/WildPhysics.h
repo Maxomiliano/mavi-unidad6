@@ -12,7 +12,8 @@ public:
 	void Update();
 	void Render();
 	void ProcessEvents();
-	void SpawnObstacles();
+	void SpawnHorizontalObstacles();
+	void SpawnVerticalObstacles();
 	void CheckCollisions(Vector2f mousePos);
 	
 private:
@@ -20,11 +21,14 @@ private:
 	Event evt;
 	//Font font;
 	//Text scoreText;
-	CircleShape obstacle;	
+	CircleShape horizontalObstacle;	
+	CircleShape verticalObstacle;
 	Vector2f position;
-	Vector2f velocity;
+	Vector2f horizontalObjectVelocity;
+	Vector2f verticalObjectVelocity;
 
-	bool isActive;
+	bool isVerticalObjectActive;
+	bool isHorizontalObjectActive;
 	bool movingRight;
 	int score = 0;
 	float deltaTime = 0.1f / 60.0f;

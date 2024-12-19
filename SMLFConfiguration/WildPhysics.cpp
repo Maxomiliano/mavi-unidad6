@@ -7,9 +7,11 @@ using namespace sf;
 using namespace std;
 
 WildPhysics::WildPhysics() : window(VideoMode(800, 600), "Wild"),
-velocity(0.0f, 0.0f),
 //acceleration(1.0f),
-isActive(false)
+horizontalObjectVelocity(0.0f, 0.0f),
+verticalObjectVelocity(0.0f, 0.0f),
+isVerticalObjectActive(false),
+isHorizontalObjectActive(false)
 {
 	srand(time(NULL));
 }
@@ -42,58 +44,99 @@ void WildPhysics::ProcessEvents()
 
 void WildPhysics::Update()
 {
-	if (isActive)
+	if (isHorizontalObjectActive)
 	{
 		//velocity.x += (movingRight ? acceleration : -acceleration) * deltaTime;
-		position = obstacle.getPosition();
-		position.x += velocity.x * deltaTime;
-		obstacle.setPosition(position);
-		if ((movingRight && position.x > window.getSize().x) || (!movingRight && position.x + obstacle.getRadius() * 2 < 0))
+		position = horizontalObstacle.getPosition();
+		position.x += horizontalObjectVelocity.x * deltaTime;
+		horizontalObstacle.setPosition(position);
+		if ((movingRight && position.x > window.getSize().x) || (!movingRight && position.x + horizontalObstacle.getRadius() * 2 < 0))
 		{
-			isActive = false;
+			isHorizontalObjectActive = false;
 		}
 	}
 	else
 	{
-		SpawnObstacles();
+		SpawnHorizontalObstacles();
+	}
+	if (isVerticalObjectActive)
+	{
+		verticalObjectVelocity.y += gravity * deltaTime; // Gravedad
+		Vector2f position = verticalObstacle.getPosition();
+		position.y += verticalObjectVelocity.y * deltaTime;
+		verticalObstacle.setPosition(position);
+
+		// Verifica si el obstáculo toca el suelo
+		if (position.y > window.getSize().y - verticalObstacle.getRadius() * 2)
+		{
+			//verticalObjectVelocity.y = 0.0f;
+			isVerticalObjectActive = false;
+		}
+	}
+	else
+	{
+		SpawnVerticalObstacles();
 	}
 }
 
 void WildPhysics::Render()
 {
 	window.clear();
-	if (isActive)
+	if (isHorizontalObjectActive)
 	{
-		window.draw(obstacle);
+		window.draw(horizontalObstacle);
+	}
+	if (isVerticalObjectActive)
+	{
+		window.draw(verticalObstacle);
 	}
 	window.display();
 }
 
-void WildPhysics::SpawnObstacles()
+void WildPhysics::SpawnHorizontalObstacles()
 {
-	obstacle.setRadius(20.0f);
-	obstacle.setFillColor(Color::Green);
+	horizontalObstacle.setRadius(20.0f);
+	horizontalObstacle.setFillColor(Color::Green);
 	movingRight = rand() % 2 == 0;
 
 	if (movingRight) 
 	{
-		float yPos = static_cast<float>(rand() % (window.getSize().y - static_cast<int>(obstacle.getRadius() * 2)));
-		obstacle.setPosition(0.0f, yPos);
+		float yPos = static_cast<float>(rand() % (window.getSize().y - static_cast<int>(horizontalObstacle.getRadius() * 2)));
+		horizontalObstacle.setPosition(0.0f, yPos);
 	}
 	else
 	{
-		float yPos = static_cast<float>(rand() % (window.getSize().y - static_cast<int>(obstacle.getRadius() * 2)));
-		obstacle.setPosition(static_cast<float>(window.getSize().x - obstacle.getRadius() * 2), yPos);
+		float yPos = static_cast<float>(rand() % (window.getSize().y - static_cast<int>(horizontalObstacle.getRadius() * 2)));
+		horizontalObstacle.setPosition(static_cast<float>(window.getSize().x - horizontalObstacle.getRadius() * 2), yPos);
 	}
 	float speed = static_cast<float>(10 + rand() % 20);
-	velocity = Vector2f(movingRight ? speed : -speed, 0.0f);
-	isActive = true;
+	horizontalObjectVelocity = Vector2f(movingRight ? speed : -speed, 0.0f);
+	isHorizontalObjectActive = true;
+}
+
+void WildPhysics::SpawnVerticalObstacles()
+{
+	verticalObstacle.setRadius(20.0f);
+	verticalObstacle.setFillColor(Color::Blue);
+
+	// Posición inicial del obstáculo vertical
+	float xPos = static_cast<float>(rand() % (window.getSize().x - static_cast<int>(verticalObstacle.getRadius() * 2)));
+	verticalObstacle.setPosition(xPos, 0.0f);
+
+	// Velocidad inicial
+	verticalObjectVelocity = Vector2f(0.0f, static_cast<float>(1 + rand() % 5)); // Velocidad inicial en Y
+
+	isVerticalObjectActive = true;
 }
 
 void WildPhysics::CheckCollisions(sf::Vector2f mousePos)
 {
-	if (obstacle.getGlobalBounds().contains(mousePos))
+	if (horizontalObstacle.getGlobalBounds().contains(mousePos))
 	{
-		isActive = false;
+		isHorizontalObjectActive = false;
+	}
+	if (verticalObstacle.getGlobalBounds().contains(mousePos))
+	{
+		isVerticalObjectActive = false;
 	}
 }
