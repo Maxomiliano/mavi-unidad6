@@ -13,20 +13,20 @@ public:
 	void Render();
 	void ProcessEvents();
 	void SpawnObstacles();
+	void CheckCollisions(Vector2f mousePos);
 	
 private:
 	int score = 0;
 	const float gravity = 0.98f;
 	const float acceleration = 0.1f;
+	float velocity = 1.0f;
 	float deltaTime = 0.1f / 60.0f;
+	bool isActive;
 
+	//Font font;
+	//Text scoreText;
 	RenderWindow window;
 	Event evt;
-	Font font;
-	Text scoreText;
-	float velocity = 100.f;	
-	vector<CircleShape> movingObstacles;
-	vector<CircleShape> fallingObstacles;
-	vector<float> movingVelocities;
+	CircleShape obstacle;	
 };
 
