@@ -24,8 +24,9 @@ private:
 	Event evt;
 	Font font;
 	Text scoreText;
-	Vector2f velocity;
-	//Vector2f position;
-	vector<CircleShape> obstacles;
+	float velocity = 100.f;	
+	vector<CircleShape> movingObstacles;
+	vector<CircleShape> fallingObstacles;
+	vector<float> movingVelocities;
 };
 

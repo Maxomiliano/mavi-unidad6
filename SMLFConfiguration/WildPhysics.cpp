@@ -32,11 +32,11 @@ void WildPhysics::ProcessEvents()
 		if (evt.type == Event::MouseButtonPressed && evt.mouseButton.button == Mouse::Left)
 		{
 			Vector2f mousePos(evt.mouseButton.x, evt.mouseButton.y);
-			for (size_t i = 0; i < obstacles.size(); i++)
+			for (size_t i = 0; i < movingObstacles.size(); i++)
 			{
-				if (obstacles[i].getGlobalBounds().contains(mousePos))
+				if (movingObstacles[i].getGlobalBounds().contains(mousePos))
 				{
-					obstacles.erase(obstacles.begin() + 1);
+					movingObstacles.erase(movingObstacles.begin() + 1);
 					score++;
 					break;
 				}
@@ -54,20 +54,30 @@ void WildPhysics::Update()
 		SpawnObstacles();
 		spawnTimer = 0.0f;
 	}
-	for (size_t i = 0; i < obstacles.size(); i++)
+	for (size_t i = 0; i < movingObstacles.size(); i++)
 	{
-		auto& obstacle = obstacles[i];
-		if (obstacle.getPosition().y <= window.getSize().y)
+		auto& obstacle = movingObstacles[i];
+		float& velocity = movingVelocities[i];
+
+		obstacle.move(velocity * deltaTime, 0.0f);
+		velocity += acceleration * deltaTime;
+
+		if (obstacle.getPosition().x < -20.0f || obstacle.getPosition().x > window.getSize().x + 20.0f)
 		{
-			obstacle.move(0.0f, gravity * deltaTime);
+			movingObstacles.erase(movingObstacles.begin() + 1);
+			movingVelocities.erase(movingVelocities.begin() + 1);
+			--i;
 		}
-		else
+	}
+
+	for (size_t i = 0; i < fallingObstacles.size(); ++i)
+	{
+		auto& obstacle = fallingObstacles[i];
+		obstacle.move(0.0f, gravity * deltaTime);
+
+		if (obstacle.getPosition().y > window.getSize().y + 20.0f)
 		{
-			obstacle.move(acceleration * deltaTime, 0.0f);
-		}
-		if (obstacle.getPosition().y > window.getSize().y || obstacle.getPosition().x > window.getSize().x)
-		{
-			obstacles.erase(obstacles.begin() + 1);
+			fallingObstacles.erase(fallingObstacles.begin() + i);
 			--i;
 		}
 	}
@@ -76,7 +86,11 @@ void WildPhysics::Update()
 void WildPhysics::Render()
 {
 	window.clear();
-	for (const auto& obstacle : obstacles)
+	for (const auto& obstacle : movingObstacles)
+	{
+		window.draw(obstacle);
+	}
+	for(const auto & obstacle : fallingObstacles)
 	{
 		window.draw(obstacle);
 	}
@@ -87,14 +101,20 @@ void WildPhysics::SpawnObstacles()
 {
 	CircleShape obstacle(20.0f);
 	obstacle.setFillColor(Color::Green);
+
 	if (rand() % 2 == 0)
 	{
-		obstacle.setPosition(rand() % window.getSize().x, 0.0f);
+		float yPos = rand() % window.getSize().y;
+		float xPos = (rand() % 2 == 0) ? 0.0f : window.getSize().x - 20.0f;
+		obstacle.setPosition(xPos, yPos);
+		movingObstacles.push_back(obstacle);
+		movingVelocities.push_back((xPos == 0.0f) ? velocity : -velocity);
 	}
 	else
 	{
-		float xPos = (rand() % 2 == 0) ? 0.0f : window.getSize().x - 20.0f;
-		obstacle.setPosition(xPos, rand() % window.getSize().y);
+		float xPos = rand() % window.getSize().x;
+		obstacle.setPosition(xPos, 0.0f);
+		fallingObstacles.push_back(obstacle);
 	}
-	obstacles.push_back(obstacle);
+	
 }
