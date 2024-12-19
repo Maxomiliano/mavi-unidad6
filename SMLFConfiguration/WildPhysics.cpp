@@ -61,12 +61,11 @@ void WildPhysics::Update()
 	}
 	if (isVerticalObjectActive)
 	{
-		verticalObjectVelocity.y += gravity * deltaTime; // Gravedad
+		verticalObjectVelocity.y += gravity * deltaTime;
 		Vector2f position = verticalObstacle.getPosition();
 		position.y += verticalObjectVelocity.y * deltaTime;
 		verticalObstacle.setPosition(position);
 
-		// Verifica si el obstáculo toca el suelo
 		if (position.y > window.getSize().y - verticalObstacle.getRadius() * 2)
 		{
 			//verticalObjectVelocity.y = 0.0f;
@@ -119,13 +118,9 @@ void WildPhysics::SpawnVerticalObstacles()
 	verticalObstacle.setRadius(20.0f);
 	verticalObstacle.setFillColor(Color::Blue);
 
-	// Posición inicial del obstáculo vertical
 	float xPos = static_cast<float>(rand() % (window.getSize().x - static_cast<int>(verticalObstacle.getRadius() * 2)));
 	verticalObstacle.setPosition(xPos, 0.0f);
-
-	// Velocidad inicial
-	verticalObjectVelocity = Vector2f(0.0f, static_cast<float>(1 + rand() % 5)); // Velocidad inicial en Y
-
+	verticalObjectVelocity = Vector2f(0.0f, static_cast<float>(1 + rand() % 5));
 	isVerticalObjectActive = true;
 }
 
