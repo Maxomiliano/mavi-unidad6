@@ -2,13 +2,11 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <vector>
 
 using namespace sf;
 using namespace std;
 
-WildPhysics::WildPhysics() :
-	window(VideoMode(800, 600, 32), "WildPhysics")
+WildPhysics::WildPhysics() : window(VideoMode(800, 600), "Wild")
 {
 	srand(time(NULL));
 }
@@ -39,12 +37,11 @@ void WildPhysics::ProcessEvents()
 				if (obstacles[i].getGlobalBounds().contains(mousePos))
 				{
 					obstacles.erase(obstacles.begin() + 1);
-					++score;
+					score++;
 					break;
 				}
 			}
 		}
-
 	}
 }
 
@@ -89,8 +86,7 @@ void WildPhysics::Render()
 void WildPhysics::SpawnObstacles()
 {
 	CircleShape obstacle(20.0f);
-	obstacle.setFillColor(Color::Red);
-
+	obstacle.setFillColor(Color::Green);
 	if (rand() % 2 == 0)
 	{
 		obstacle.setPosition(rand() % window.getSize().x, 0.0f);

@@ -6,6 +6,7 @@
 #include "Bounce.h"
 #include "WildPhysics.h"
 
+
 using namespace sf;
 
 int main()
@@ -13,6 +14,8 @@ int main()
 	//FastAndFurious faf;
 	//Space space;
 	//Bounce bounce;
-	WildPhysics wp;
+	WildPhysics wildp;
+	wildp.Play();
+	
 	return 0;
 }
